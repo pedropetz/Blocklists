@@ -1,0 +1,88 @@
+#!/bin/bash
+
+DIRLSTS="/home/pihole/projectos/blocklists/lists"
+
+WHITELST="/home/pihole/projectos/blocklists/whitelist.txt"
+FINALLST="/home/pihole/projectos/blocklists/finallist.txt"
+
+check_invalid () {
+    str="$1"
+    if [[ ${str:0:1} != "" ]] && [[ ${str:0:1} != "#" ]] 
+    then
+	check_mask $1
+    fi
+}
+
+check_dupp () {
+    TRUE=0
+    
+    while IFS= read -r line
+    do
+        #echo "checking.. $line"
+        if [ $line == $1 ]
+        then
+            TRUE=1;
+            break;
+        fi
+	
+	
+    done < "$FINALLST"
+    
+    if [ $TRUE -eq 0 ]
+    then
+	echo "$1" >> "$FINALLST";
+    fi
+}
+
+check_white_lst (){
+    TRUE=0
+    
+    while IFS= read -r line
+    do
+	#echo "checking.. $line"
+	if [ $line == $1 ]
+	then
+	    TRUE=1;
+	    break;
+	fi
+
+	
+    done < "$WHITELST"
+
+    if [ $TRUE -eq 0 ]
+    then
+        check_dupp $1
+    fi
+}
+
+check_mask () {
+    nmap -sL "$1" | awk '/Nmap scan report/{print $NF}' | tr -d "(" | tr -d ")" | while read lin\
+e; do
+        check_white_lst "$line";
+    done
+}
+
+check_block_lists () {
+    for list in /home/pihole/projectos/blocklists/lists/*;
+    do
+	while IFS= read -r line; do
+	    AUX=`echo $line | cut -d " " -f1`
+	    
+	    check_invalid "$AUX"
+	done < "$DIRLSTS/$(basename "$list")"
+    done
+}
+
+
+rm "$FINALLST"; touch "$FINALLST";
+
+#check_white_lst 174.129.25.172
+#check_mask 174.129.25.175
+#check_white_lst 174.129.25.172
+#check_white_lst 174.129.25.170
+#check_white_lst 174.129.25.171
+
+check_block_lists
+
+
+### retirar / do IP
