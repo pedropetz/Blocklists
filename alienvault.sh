@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 DIR="/home/pihole/projectos/blocklists/"
 LIST="alien_vault"
 
