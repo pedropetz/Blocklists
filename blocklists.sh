@@ -1,9 +1,11 @@
 #!/bin/bash
 
-DIRLSTS="/home/pihole/projectos/blocklists/lists"
+PROJDIR="/home/pihole/Blocklists"
 
-WHITELST="/home/pihole/projectos/blocklists/whitelist.txt"
-FINALLST="/home/pihole/projectos/blocklists/finallist.txt"
+DIRLSTS="$PROJDIR/lists"
+
+WHITELST="$PROJDIR/whitelist.txt"
+FINALLST="$PROJDIR/finallist.txt"
 
 sort_list () {
     sort -n $1 > $1".aux"
@@ -27,29 +29,7 @@ check_dupp () {
     time TRUE=`grep "$1" "$FINALLST" | wc -l`
     
     N1=`echo $1 | cut -d "." -f1`
-    : '
-    while IFS= read -r line
-    do
-        #echo "checking.. $line"
-        if [ $line == $1 ]
-        then
-            TRUE=1;
-	    echo "Entra na dupp_T";
-            break;
-        fi
-
-	NL=`echo $line | cut -d "." -f1`
-	
-	if [ $NL -gt $N1  ]
-	then
-	    TRUE=0;
-	    echo "Entra na dupp_F $line:$1";
-	    break;
-	fi
-	
-	
-    done < "$FINALLST"
-    '
+    
     if [ $TRUE -eq 0 ]
     then
 	echo "$1" >> "$FINALLST";
@@ -57,57 +37,40 @@ check_dupp () {
 }
 
 check_white_lst (){
-    TRUE=`grep "$1" "$WHITELST" | wc -l`
-
-    N1=`echo $1 | cut -d "." -f1`
-
-    
-    : '
-    while IFS= read -r line
+    cat "$WHITELST" | while read -r line
     do
-	#echo "checking.. $line"
-	if [ $line == $1 ]
+        CK=`grep "$line" "$1" | wc -l`
+	
+	if [ $CK -gt 0 ]
 	then
-	    TRUE=1;
-	    echo "Entra na white_T";
-	    break;
+            sed -i "s~$line~#~" "$1";
 	fi
-	
-	NL=`echo $line | cut -d "." -f1`
-	
-        if [ $NL -gt $N1  ]
-        then
-            TRUE=0;
-	    echo "Entra na white_F $line:$1";
-            break;
-        fi
-	
-	
-    done < "$WHITELST"
-    '
-    
-    if [ $TRUE -eq 0 ]
-    then
-        check_dupp $1
-    fi
+    done
 }
 
 check_mask () {
-    nmap -sL "$1" | awk '/Nmap scan report/{print $NF}' | tr -d "(" | tr -d ")" | while read line; do
-	
-        check_white_lst "$line";
-    done
+    echo "" >> "$2";
+    nmap -sL "$1" | awk '/Nmap scan report/{print $NF}' | tr -d "(" | tr -d ")" >> "$2";
+    sed -i "s~$1~#~" "$list";
 }
 
 check_block_lists () {
     for list in "$DIRLSTS"/*;
     do
-	while IFS= read -r line; do
-	    AUX=`echo $line | cut -d " " -f1`
-	    
-	    check_invalid "$AUX"
-	done < "$DIRLSTS/$(basename "$list")"
+	cat "$list" | cut -d " " -f1 | grep "/" | while read -r line
+	do
+	    echo "$line"
+	    check_mask "$line" "$list";
+	done
+
+	check_white_lst $list
+	
 	sort_list "$list";
+
+	figlet "$(basename "$list")"
+	
+	cat "$list" >> "$FINALLST";
+	echo -e "\n\n" >> "$FINALLST";
     done
 }
 
@@ -121,6 +84,5 @@ rm "$FINALLST"; touch "$FINALLST";
 #check_white_lst 174.129.25.171
 
 check_block_lists
-
 
 ### retirar / do IP
