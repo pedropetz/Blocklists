@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="/home/pihole/projectos/blocklists/"
+DIR="/home/pihole/Blocklists/"
 LIST="bi_any"
 
 wget -O "$DIR"lists/"$LIST"_1 https://www.badips.com/get/list/any/2?age=1d > /dev/null 2> "$DIR"logs/"$LIST"_1.err

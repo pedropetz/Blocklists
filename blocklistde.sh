@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="/home/pihole/projectos/blocklists/"
+DIR="/home/pihole/Blocklists/"
 LIST="block_list_de"
 
 wget -O "$DIR"lists/"$LIST"_all http://lists.blocklist.de/lists/all.txt > /dev/null 2> "$DIR"logs/"$LIST"_all.err

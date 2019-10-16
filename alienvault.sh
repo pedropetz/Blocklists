@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-DIR="/home/pihole/projectos/blocklists/"
+DIR="/home/pihole/Blocklists/"
 LIST="alien_vault"
 
 wget -O "$DIR"lists/"$LIST" https://reputation.alienvault.com/reputation.generic > /dev/null 2> "$DIR"logs/"$LIST".err

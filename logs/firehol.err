@@ -1,0 +1,16 @@
+--2019-10-15 17:00:01--  https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level3.netset
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.0.133, 151.101.64.133, 151.101.128.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.0.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 260420 (254K) [text/plain]
+Saving to: ‘/home/pihole/Blocklists/lists/firehol’
+
+     0K .......... .......... .......... .......... .......... 19% 1.60M 0s
+    50K .......... .......... .......... .......... .......... 39% 3.13M 0s
+   100K .......... .......... .......... .......... .......... 58% 49.6M 0s
+   150K .......... .......... .......... .......... .......... 78% 87.6M 0s
+   200K .......... .......... .......... .......... .......... 98% 3.23M 0s
+   250K ....                                                  100% 8233G=0.06s
+
+2019-10-15 17:00:02 (3.96 MB/s) - ‘/home/pihole/Blocklists/lists/firehol’ saved [260420/260420]
+

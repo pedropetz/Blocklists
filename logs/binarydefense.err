@@ -1,0 +1,12 @@
+--2019-10-15 17:00:01--  https://www.binarydefense.com/banlist.txt
+Resolving www.binarydefense.com (www.binarydefense.com)... 173.230.146.87
+Connecting to www.binarydefense.com (www.binarydefense.com)|173.230.146.87|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 78197 (76K) [text/plain]
+Saving to: ‘/home/pihole/Blocklists/lists/binarydefense’
+
+     0K .......... .......... .......... .......... .......... 65%  144K 0s
+    50K .......... .......... ......                          100% 56.3M=0.3s
+
+2019-10-15 17:00:07 (219 KB/s) - ‘/home/pihole/Blocklists/lists/binarydefense’ saved [78197/78197]
+

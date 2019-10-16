@@ -57,7 +57,8 @@ check_mask () {
 check_block_lists () {
     for list in "$DIRLSTS"/*;
     do
-	cat "$list" | cut -d " " -f1 | grep "/" | while read -r line
+	figlet "$(basename "$list")"
+	cat "$list" | cut -d " " -f1 | grep "/" | grep -v "/32" | while read -r line
 	do
 	    echo "$line"
 	    check_mask "$line" "$list";
@@ -67,7 +68,7 @@ check_block_lists () {
 	
 	sort_list "$list";
 
-	figlet "$(basename "$list")"
+	figlet "$(basename "$list")" >> "$FINALLST";
 	
 	cat "$list" >> "$FINALLST";
 	echo -e "\n\n" >> "$FINALLST";

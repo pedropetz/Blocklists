@@ -1,0 +1,13 @@
+--2019-10-15 17:00:01--  https://www.dan.me.uk/torlist/
+Resolving www.dan.me.uk (www.dan.me.uk)... 192.146.137.20, 2001:67c:26b4:2:21e:bff:fec7:87a
+Connecting to www.dan.me.uk (www.dan.me.uk)|192.146.137.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/plain]
+Saving to: ‘/home/pihole/Blocklists/lists/tor_nodes’
+
+     0K .......... .......... .......... .......... ..........  146K
+    50K .......... .......... .......... .......... ..........  256K
+   100K .......... .........                                    393K=0.6s
+
+2019-10-15 17:00:15 (203 KB/s) - ‘/home/pihole/Blocklists/lists/tor_nodes’ saved [122246]
+
